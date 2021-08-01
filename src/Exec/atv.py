@@ -14,3 +14,39 @@ if fruta_buscada in frutas:
     print(frutas.index(fruta_buscada))
 else:
     print('Desculpe, a {} não está na lista frutas'.format( fruta_buscada))
+
+    # set e o nome da Lista em Python que não permite valores duplicados "{}"
+    # tuple é o nome da lista imutável em Python "()"
+    # lista em Python é dado a partir das chaves "[]" 
+    
+
+    colecao = {11122233344, 22233344455, 33344455566}
+ 
+    colecao.add(11122233344) #nao vai adicionar pois este CPF já existe!
+
+    for cpf in colecao:
+     print(cpf)
+
+    #dictionary
+    
+    instrutores = {'Nico' : 39, 'Flavio': 37, 'Marcos' : 30}
+    value = instrutores['Flavio']
+    print(value)
+
+
+    #List Comprehensions
+    frutas = ["maçã", "banana", "laranja", "melancia"]
+    lista = [fruta.upper() for fruta in frutas]
+    print(lista)    
+
+    inteiros = [1,3,4,5,7,8]
+    quadrados = [n*n for n in inteiros]
+    print(quadrados)
+
+
+    # Aplique a expressão (numero) em cada item (numero) da lista (inteiros) caso a condição (if) cond seja satisfeita.
+    inteiros = [1,3,4,5,7,9,12,15]
+    pares = [numero for numero in inteiros if numero % 2 == 0 ]
+    print(pares)
+
+    
