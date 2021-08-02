@@ -31,7 +31,7 @@ else:
     
     instrutores = {'Nico' : 39, 'Flavio': 37, 'Marcos' : 30}
     value = instrutores['Flavio']
-    print(value)
+    print(value )
 
 
     #List Comprehensions
@@ -48,5 +48,9 @@ else:
     inteiros = [1,3,4,5,7,9,12,15]
     pares = [numero for numero in inteiros if numero % 2 == 0 ]
     print(pares)
+
+arquivo= open('palavras.txt', 'r')
+arquivo.read()
+
 
     
