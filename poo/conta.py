@@ -1,3 +1,4 @@
+from poo.cliente import Cliente
 from typing import get_args
 
 
@@ -6,6 +7,7 @@ class Conta:
     #Construtor
     def __init__(self, numero, titular, saldo, limite) -> None:
         print('Chamando cobtrutor do objeto ... {}'.format(self))
+
         #referencia do obj
         self.__numero = numero
         self.__titular = titular
@@ -37,20 +39,34 @@ class Conta:
     def set_limite(self, limite):
         self.__limite = limite
 
+    @staticmethod
+    def codigo_banco() -> None:
+        return {'BB': '001', 'Caixa':'104', 'Bradesco': '237' }
 
-    
+
+              
 
     def extrato(self):
         print('Saldo disponível: {}'.format(self.get_saldo, self.get_titular))
 
     def deposita(self, valor):
         self.saldo += valor
+    
+    def __pode_sacar(self, valor):
+        saldo_mais_limite = self.__limite + self.__saldo
+        return valor <= saldo_mais_limite
 
     def saca(self, valor):
-        self.saldo -= valor
-    
+        if(self.__pode_sacar(valor)):
+            self.saldo -= valor
+            print("Saque efetuado.")
+        else:
+            print("Saldo insuficiente.")
+
     def transfere(self, valor, destino):
-        self.saca(valor)
-        destino.deposita(valor)
-    
-    
+        if(self.__pode_sacar(valor)):
+            destino.deposita(valor)
+            print("Transferência efetuada...")
+        else:
+            print("Saldo insuficiente...")
+            
