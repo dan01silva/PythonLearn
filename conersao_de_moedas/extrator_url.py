@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import re
-
 
 import re
 class ExtratorURL:
@@ -45,9 +43,34 @@ class ExtratorURL:
         else:
             valor = self.get_url_parametros()[indice_valor:indice_e_comercial]
         return valor
+    #Metodo especial
+    def __str__(self):
+        return f'URL: {self.url}\n URL base: {self.get_url_base()}\n Parametros: {self.get_url_parametros()}'
+    #Metodo especial
+    def __len__(self):
+        return len(self.url)
+
+    def __eq__(self, other):
+        return self.url == other.url
 
 
-url = "bytebank.com/cambio?quantidade=100&moedaOrigem=real&moedaDestino=dolar"
+url = "https://www.bytebank.com/cambio?quantidade=100&moedaOrigem=real&moedaDestino=dolar"
+other = "https://www.bytebank.com/cambio?quantidade=100&moedaOrigem=real&moedaDestino=dolar"
 extrator_url = ExtratorURL(url)
+extrator_url_1 = ExtratorURL(other)
 valor_quantidade = extrator_url.get_valor_parametro("quantidade")
 print(valor_quantidade)
+print(f'Tamanho da URL: {len(extrator_url)}')
+print(extrator_url)
+
+
+print(extrator_url == extrator_url_1) #extrator_url.__eq__(extrator_url1)
+
+#Verificando endereço de memória ID
+print(id(extrator_url))
+print(id(extrator_url_1))
+
+print(1 == True)
+print(1 is True)
+
+bool("") is False
