@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-
 import re
+import requests
+import json
+import requests
 class ExtratorURL:
     def __init__(self, url):
         self.url = self.sanitiza_url(url)
@@ -32,7 +34,7 @@ class ExtratorURL:
     def get_url_parametros(self):
         indice_interrogacao = self.url.find('?')
         url_parametros = self.url[indice_interrogacao + 1:]
-        return url_parametros
+        return url_parametros   
 
     def get_valor_parametro(self, parametro_busca):
         indice_parametro = self.get_url_parametros().find(parametro_busca)
@@ -43,9 +45,22 @@ class ExtratorURL:
         else:
             valor = self.get_url_parametros()[indice_valor:indice_e_comercial]
         return valor
+
+    #Realizando GET na API de cotacao
+    url_API = 'https://economia.awesomeapi.com.br/last/USD-BRL'
+    res = requests.get(url_API)
+    if res.status_code == 200 : 'Status 200 OK'
+            #Manipulando o obj json para obj em python
+    obj_resp = json.loads(res.text) 
+            #Percorrendo obj USDBRL e pegando o valor do dolar
+    for key, value in obj_resp['USDBRL'].items(): 
+        if (key == 'bid'):
+            cotacao = value    
+        
     #Metodo especial
     def __str__(self):
-        return f'URL: {self.url}\n URL base: {self.get_url_base()}\n Parametros: {self.get_url_parametros()}'
+        return f'URL: {self.url}\n URL base: {self.get_url_base()}\n Parametros: {self.get_url_parametros()}\n Cotacao do Dolar AGORA: {self.get_cotacao}'
+
     #Metodo especial
     def __len__(self):
         return len(self.url)
@@ -55,22 +70,28 @@ class ExtratorURL:
 
 
 url = "https://www.bytebank.com/cambio?quantidade=100&moedaOrigem=real&moedaDestino=dolar"
-other = "https://www.bytebank.com/cambio?quantidade=100&moedaOrigem=real&moedaDestino=dolar"
+#other = "https://www.bytebank.com/cambio?quantidade=100&moedaOrigem=real&moedaDestino=dolar"
 extrator_url = ExtratorURL(url)
-extrator_url_1 = ExtratorURL(other)
-valor_quantidade = extrator_url.get_valor_parametro("quantidade")
-print(valor_quantidade)
-print(f'Tamanho da URL: {len(extrator_url)}')
-print(extrator_url)
+#valor_quantidade = extrator_url.get_valor_parametro("quantidade")
+#print(valor_quantidade)
+#print(f'Tamanho da URL: {len(extrator_url)}')
+#print(extrator_url)
 
 
-print(extrator_url == extrator_url_1) #extrator_url.__eq__(extrator_url1)
+#print(extrator_url == extrator_url_1) #extrator_url.__eq__(extrator_url1)
 
 #Verificando endereço de memória ID
-print(id(extrator_url))
-print(id(extrator_url_1))
+#print(id(extrator_url))
+#print(id(extrator_url_1))
 
-print(1 == True)
-print(1 is True)
 
-bool("") is False
+#print(1 == True)
+# Comparando o ID
+#print(1 is True)
+#print(bool("") is False)  
+
+
+VALOR_DOLAR = extrator_url.cotacao  #return value realtime
+moeda_origem = extrator_url.get_valor_parametro("moedaOrigem")
+moeda_destino = extrator_url.get_valor_parametro("moedaDestino")
+quantidade = extrator_url.get_valor_parametro("quantidade")
