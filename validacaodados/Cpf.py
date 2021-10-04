@@ -18,17 +18,8 @@ class Cpf:
             raise ValueError("Quantidade de digitos invalido")
     
     def formata_cpf(self):
-        fatia1 = self.cpf[:3]
-        fatia2 = self.cpf[3:6]
-        fatia3 = self.cpf[6:9]
-        fatia4 = self.cpf[9:11]
-        return(
-            "{}.{}.{}-{}".format(
-            fatia1,
-            fatia2,
-            fatia3,
-            fatia4
-            )
-        )
+       mask_cpf = CPF()
+       return mask_cpf.mask(self.cpf)       
+       pass
     def __str__(self) -> str:
         return self.formata_cpf()
