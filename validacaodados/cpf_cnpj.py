@@ -2,48 +2,46 @@
 from typing import ValuesView
 from validate_docbr import CNPJ, CPF
 
-class CpfCnpj:
-    def __init__(self, doc, tipo_doc) -> None:
-        doc = str(doc)
-        self.tipo_doc = tipo_doc
-
-        if  self.tipo_doc == "cpf":
-            if self.valida_cpf(doc):
-                self.cpf = doc
-            else:
-                raise ValueError("CPF Invalido!!")
-        elif self.tipo_doc =="cnpj": 
-            if self.valida_cnpj(doc):
-                self.cnpj = doc  
-            else:
-                raise ValueError("CNPJ Invalido")
-        else:
-            raise ValueError("Documento invalido")
-
-    def valida_cpf(self, doc):
+class Documento:
+#Facture
+    @staticmethod
+    def cria_documento(doc):
         if len(doc) == 11:
-            validacao = CPF()
-            return validacao.validate(doc)
-        else:
-            raise ValueError("Quantidade de digitos invalido")
-    
-    def formata_cpf(self):
-       mask_cpf = CPF()
-       return mask_cpf.mask(self.cpf)       
-       pass
-    def __str__(self) -> str:
-        if  self.tipo_doc == "cpf":
-            return self.formata_cpf()
-        elif self.tipo_doc == "cnpj":
-            return self.formata_cnpj()
-    
-    def valida_cnpj(self,cnpj):
-        if len(cnpj) == 14:
-            validacao_cnpj = CNPJ()
-            return validacao_cnpj.validate(cnpj)
-        else:
-            raise ValueError("Quantidade de digitos invalido")
+            return DocCpf(doc)
+        elif len(doc) == 14:
+            return DocCnpj(doc)
 
-    def formata_cnpj(self) -> None:
+class DocCpf:
+    def __init__(self, documento) -> None:
+        if self.valida(documento):
+            self.cpf = documento
+        else:
+            raise ValueError("CPF invalido!!!!")
+
+    def valida(self,doc):
+        validacao = CPF()
+        return validacao.validate(doc)
+
+    def format(self):
+        mask_cpf = CPF()
+        return mask_cpf.mask(self.cpf)
+
+    def __str__(self) -> str:
+        return self.format()
+class DocCnpj:
+    def __init__(self, doc) -> None:
+        if self.valida(doc):
+            self.cnpj = doc
+        else:
+            raise ValueError("CNPJ invalido!!!!")
+
+    def valida(self,doc):
+        validacao_cnpj = CNPJ()
+        return validacao_cnpj.validate(doc)
+    
+    def format(self):
         mask_cnpj = CNPJ()
         return mask_cnpj.mask(self.cnpj)
+
+    def __str__(self) -> str:
+        return self.format()             

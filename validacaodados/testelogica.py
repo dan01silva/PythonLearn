@@ -1,8 +1,5 @@
-from cpf_cnpj import CpfCnpj
-
+from cpf_cnpj import Documento
 from validate_docbr import CNPJ, CPF
-
-    
 
 #objeto_cpf = Cpf(42689614880)#objeto cpf
 #print(objeto_cpf)
@@ -16,9 +13,9 @@ cnpj = CNPJ()
 cpf = CPF()
 
 
+cnpj_cpf = Documento.cria_documento(cnpj.generate())
 
-cnpj_cpf = CpfCnpj(cnpj.generate(), "cnpj")
-cpf_cnpj = CpfCnpj(cpf.generate(), "cpf")
+cpf_cnpj = Documento.cria_documento(cpf.generate())
 
 
-print("{} <<<<<>>>>> {} ".format(cnpj_cpf, cpf_cnpj) )
+print("{} <<<>>> {}".format(cnpj_cpf,cpf_cnpj) )
